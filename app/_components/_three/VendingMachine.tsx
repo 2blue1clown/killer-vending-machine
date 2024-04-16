@@ -10,12 +10,7 @@ interface VendingMachineProps {
   onClick?: (e: any) => void;
 }
 
-enum PIVOT {
-  FRONT,
-  BACK,
-}
 
-const VENDING_MACHINE_WIDTH = 3.6;
 
 export const VendingMachine = forwardRef(
   ({ scale,onClick, position = [0, 0, 0] }: VendingMachineProps, ref) => {

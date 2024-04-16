@@ -6,11 +6,20 @@ import Experience from "./_components/_three/Experience";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Killer Vending Machine</h1>
+    <main>
       <KeyboardControls map={ [
     {name:"change",keys:["Space"]},
   ] }>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
+    <h1>Killer Vending Machine</h1>
     <Canvas
       shadows
       camera={{
