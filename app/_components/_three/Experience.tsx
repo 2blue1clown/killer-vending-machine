@@ -1,9 +1,10 @@
+"use client"
 import { OrbitControls, useAnimations, useGLTF, useKeyboardControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import {  useRef, useState } from "react";
-import { VendingMachine } from "./VendingMachine";
 import { useFrame } from "@react-three/fiber";
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "three";
+import { VendingMachine } from "./VendingMachine";
 
 const VENDING_MACHINE_WIDTH = 3.6;
 const MARGIN_FOR_ERROR = 0.1;

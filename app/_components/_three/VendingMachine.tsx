@@ -1,6 +1,8 @@
+"use client"
 import { useAnimations, useGLTF } from "@react-three/drei";
 import React, { Ref, forwardRef } from "react";
 import { Group, LoopOnce, Object3DEventMap } from "three";
+
 
 interface VendingMachineProps {
   position?: [number, number, number];
