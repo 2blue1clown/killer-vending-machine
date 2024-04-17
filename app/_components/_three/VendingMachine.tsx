@@ -21,19 +21,6 @@ export const VendingMachine = forwardRef(
     );
 
 
-    const eventHandler = (e: any) => {
-      console.log(e.object.name);
-      if (e.object.name !== "top_buttonpressable") return;
-      console.log(names, actions);
-      if (actions && names) {
-        const action = actions[names[0]];
-        console.log(action);
-        if (action) {
-          console.log("Playing animation");
-          action.setLoop(LoopOnce, 1).reset().play();
-        }
-      }
-    };
 
     return (
       <group

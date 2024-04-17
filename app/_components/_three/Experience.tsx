@@ -62,6 +62,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
   }
 
   function changeFromClick(){
+    console.log("click")
       if(gameStatus !== GameStatus.PLAYING) return
       if(!change){setChange(true)}
     }
@@ -82,7 +83,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
   }
 
   function chooseNewSpeed(){
-    setSpeed(Math.random()*2+score*0.1)
+    setSpeed(Math.random()*0.5+score*0.1)
   }
 
   function moveBoundry(rotation?:number){
@@ -149,7 +150,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
 
       <OrbitControls makeDefault />
       <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
@@ -178,7 +179,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
         </mesh>
         <mesh rotation={[Math.PI/2,0,0]}>
           <planeGeometry args={[40, 40]} />
-          <meshBasicMaterial color="lightgrey" transparent={true} opacity={0.6} side={DoubleSide}/>
+          <meshBasicMaterial color="lightgrey" opacity={0.6} side={DoubleSide}/>
         </mesh>
     </>
   );

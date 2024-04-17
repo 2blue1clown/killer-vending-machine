@@ -27,7 +27,19 @@ export default function Home() {
       <KeyboardControls map={ [
     {name:"change",keys:["Space"]},
   ] }>
-    <div className=" flex flex-col p-10 items-center min-h-screen"> 
+    <Canvas
+      shadows
+      camera={{
+        fov: 45,
+        near: 0.1,
+        far: 200,
+        position: [-60, 60, 48],
+      }}
+    >
+      <Experience score={score} setScore={setScore} gameStatus={gameStatus} setGameStatus={setGameStatus} />
+    </Canvas>,
+  </KeyboardControls>
+  <div className="flex flex-col p-10 items-center  absolute top-0 left-0"> 
       {gameStatus === GameStatus.PREGAME && <h1>Killer Vending Machine</h1>}
       
       {(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER)&& <div>{score}</div>}
@@ -35,20 +47,6 @@ export default function Home() {
       <button onClick={startGame}>Play</button>
 }
     </div>
-
-
-    <Canvas
-      shadows
-      camera={{
-        fov: 45,
-        near: 0.1,
-        far: 200,
-        position: [-40, 40, 48],
-      }}
-    >
-      <Experience score={score} setScore={setScore} gameStatus={gameStatus} setGameStatus={setGameStatus} />
-    </Canvas>,
-  </KeyboardControls>
   </main>
   );
 }
