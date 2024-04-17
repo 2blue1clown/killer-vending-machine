@@ -1,23 +1,23 @@
 "use client"
 import { OrbitControls, useAnimations, useGLTF, useKeyboardControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
-import {  useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "three";
 import { VendingMachine } from "./VendingMachine";
+import { GameStatus } from "@/app/page";
 
 const VENDING_MACHINE_WIDTH = 3.6;
 const MARGIN_FOR_ERROR = 0.1;
 
-
-enum GameStatus {
-  PREGAME,
-  PLAYING,
-  PAUSED,
-  GAMEOVER
+interface ExperienceProps{
+  score:number,
+  setScore: (score:number) => void
+  gameStatus:GameStatus,
+  setGameStatus: (gameStatus:GameStatus) => void
 }
 
-export default function Experience() {
+export default function Experience({score,setScore,gameStatus,setGameStatus}:ExperienceProps) {
   const vendingMachineRef = useRef<Group>(null)
   const boundaryRef = useRef<Group>(null)
   const boundaryPlaneRef = useRef<Mesh>(null)
@@ -26,10 +26,17 @@ export default function Experience() {
   const [change,setChange] = useState(false)
   const [spaceBarDown,setSpaceBarDown] = useState(false)
 
-  const [gameStatus,setGameStatus] = useState<GameStatus>(GameStatus.PLAYING)
 
   const [speed,setSpeed]= useState(1)
-  const [score,setScore] = useState(0)
+
+  useEffect(() => {
+    if(gameStatus === GameStatus.PLAYING){
+      console.log('playing')
+      moveBoundry(Math.PI/6)
+
+    }
+  },[gameStatus])
+
 
   function changingFromSpaceBar(){
       if(gameStatus !== GameStatus.PLAYING) return
@@ -50,7 +57,6 @@ export default function Experience() {
   }
 
   function gameOver(){
-    console.log("you scored", score);
     (boundaryPlaneRef.current?.material as MeshBasicMaterial).color.set("red")
     setGameStatus(GameStatus.GAMEOVER)
   }
@@ -77,6 +83,17 @@ export default function Experience() {
 
   function chooseNewSpeed(){
     setSpeed(Math.random()*2+score*0.1)
+  }
+
+  function moveBoundry(rotation?:number){
+    if(!boundaryRef.current) return
+    if(rotation){
+      boundaryRef.current.rotation.x = rotation
+      boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
+      return
+    }
+    boundaryRef.current.rotation.x = -getDirection()*Math.random()*Math.PI/2
+    boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
   }
 
   function moveMachine(delta:number){
@@ -119,13 +136,11 @@ export default function Experience() {
         gameOver()
         return
       }
-      if(!boundaryRef.current) return
 
       setScore(score+1)
       chooseNewSpeed()
+      moveBoundry()
 
-      boundaryRef.current.rotation.x = -getDirection()*Math.random()*Math.PI/2
-      boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
     }
     moveMachine(delta)
 
@@ -145,16 +160,17 @@ export default function Experience() {
         ref={vendingMachineRef}
       ></VendingMachine>
       
-      <group ref={boundaryRef} rotation={[2*Math.PI/6,0,0]} position={[0,0,VENDING_MACHINE_WIDTH / 2]} > 
+    <group ref={boundaryRef} rotation={[0,0,0]} position={[0,0,0]} > 
         <mesh ref={boundaryPlaneRef} position={[0,10,0]}>
           <planeGeometry args={[10 , 20]} />
-          <meshBasicMaterial color={0x0000ff} transparent={true} opacity={0.2} side={DoubleSide}/>
+          <meshBasicMaterial color={0x0000ff} transparent={true} opacity={gameStatus === GameStatus.PREGAME? 0 : 0.2} side={DoubleSide}/>
         </mesh>
         <mesh>
           <sphereGeometry args={[0.1]}/>
           <meshBasicMaterial color="orange" wireframe={true} />
         </mesh>
       </group>
+
 
         <mesh>
           <sphereGeometry args={[0.1]}/>
