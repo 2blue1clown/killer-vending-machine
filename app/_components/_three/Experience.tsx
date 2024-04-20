@@ -6,6 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "three";
 import { VendingMachine } from "./VendingMachine";
 import { GameStatus } from "@/app/page";
+import { FatMan } from "./FatMan";
 
 const VENDING_MACHINE_WIDTH = 3.6;
 const MARGIN_FOR_ERROR = 0.1;
@@ -20,6 +21,7 @@ interface ExperienceProps{
 export default function Experience({score,setScore,gameStatus,setGameStatus}:ExperienceProps) {
   const vendingMachineRef = useRef<Group>(null)
   const boundaryRef = useRef<Group>(null)
+  const fatmanRef = useRef<Group>(null)
   const boundaryPlaneRef = useRef<Mesh>(null)
   const [subscribeKeys, getKeys] = useKeyboardControls()
 
@@ -104,13 +106,20 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
     const vendingMachineGroup = vendingMachineRef.current as Group<Object3DEventMap>
     const vendingMachineMesh = vendingMachineGroup.children[1]
+    const fatmanGroup = fatmanRef.current as Group<Object3DEventMap>
 
 
     let tip = vendingMachineGroup.rotation.x + speed*delta*getDirection();
 
+
+    
     if(Math.abs(tip) > Math.PI/2){
       tip = Math.sign(tip) * Math.PI/2;
     }
+
+    const fatmanScale = Math.min(1.5,1.5* (1 - tip/(Math.PI/2)))
+    fatmanGroup.scale.y = fatmanScale
+
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
       console.log("hit boundary")
       gameOver()
@@ -160,6 +169,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
         scale={1}
         ref={vendingMachineRef}
       ></VendingMachine>
+      <FatMan ref={fatmanRef} position={[0,0,8]} scale={[1.5,1.5,1.5]}/>
       
     <group ref={boundaryRef} rotation={[0,0,0]} position={[0,0,0]} > 
         <mesh ref={boundaryPlaneRef} position={[0,10,0]}>

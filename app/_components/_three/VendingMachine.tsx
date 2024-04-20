@@ -14,6 +14,7 @@ interface VendingMachineProps {
 
 export const VendingMachine = forwardRef(
   ({ scale,onClick, position = [0, 0, 0] }: VendingMachineProps, ref) => {
+    
     const vendingMachine = useGLTF("./vending-machine.glb");
     const { actions, names } = useAnimations(
       vendingMachine.animations,
