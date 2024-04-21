@@ -188,7 +188,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
           <sphereGeometry args={[0.1]}/>
           <meshBasicMaterial color="red" wireframe={true} />
         </mesh> */}
-        <BloodBurst scale={5} position={[0,2,0]}/>
+        <BloodBurst scale={5} position={[0,0,0]}/>
         <mesh rotation={[Math.PI/2,0,0]}>
           <planeGeometry args={[40, 40]} />
           <meshBasicMaterial color="lightgrey" opacity={0.6} side={DoubleSide}/>

@@ -1,4 +1,5 @@
 uniform float uTime;
+varying vec4 vCalcPos;
 
 float random (vec2 st) {
     return fract(sin(dot(st.xy,
@@ -11,7 +12,11 @@ void main()
     /**
      * Position
      */
-    vec4 modelPosition = modelMatrix * vec4(position*sqrt(uTime)*2.0 + vec3(0,-3,0)*pow(uTime,2.0), 1.0);
+     float time = min(uTime, 1.0);
+    vec4 vCalPos = vec4(position*sqrt(time)*2.0 + vec3(0,-3,0)*pow(time,2.0), 1.0);
+    vCalPos.y = max(vCalPos.y, 0.0);
+   
+    vec4 modelPosition = modelMatrix * vCalPos;
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
     gl_Position = projectedPosition;

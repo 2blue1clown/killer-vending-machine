@@ -39,6 +39,7 @@ export default function BloodBurst(props:GroupProps){
             </bufferGeometry>
             {/* <meshStandardMaterial color="red" side={DoubleSide} /> */}
             <shaderMaterial 
+            transparent={true}
             ref={materialRef}
             vertexShader={vertexShader}
             fragmentShader={fragmentShader}
