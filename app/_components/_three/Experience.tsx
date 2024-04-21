@@ -7,6 +7,7 @@ import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "th
 import { VendingMachine } from "./VendingMachine";
 import { GameStatus } from "@/app/page";
 import { FatMan } from "./FatMan";
+import BloodBurst from "./BloodBurst/BloodBurst";
 
 const VENDING_MACHINE_WIDTH = 3.6;
 const MARGIN_FOR_ERROR = 0.1;
@@ -164,7 +165,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       <OrbitControls makeDefault />
       <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={1.5} />
-      <VendingMachine
+      {/* <VendingMachine
         onClick={changeFromClick}
         scale={1}
         ref={vendingMachineRef}
@@ -186,7 +187,8 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
         <mesh>
           <sphereGeometry args={[0.1]}/>
           <meshBasicMaterial color="red" wireframe={true} />
-        </mesh>
+        </mesh> */}
+        <BloodBurst scale={5} position={[0,2,0]}/>
         <mesh rotation={[Math.PI/2,0,0]}>
           <planeGeometry args={[40, 40]} />
           <meshBasicMaterial color="lightgrey" opacity={0.6} side={DoubleSide}/>
