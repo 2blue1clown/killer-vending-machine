@@ -110,7 +110,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     const fatmanGroup = fatmanRef.current as Group<Object3DEventMap>
 
 
-    let tip = vendingMachineGroup.rotation.x + speed*delta*getDirection();
+    let tip = vendingMachineGroup.rotation.x + getDirection()*(speed*delta+Math.pow(vendingMachineGroup.rotation.x,2)*0.05);
 
 
     
@@ -165,7 +165,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       <OrbitControls makeDefault />
       <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={1.5} />
-      {/* <VendingMachine
+      <VendingMachine
         onClick={changeFromClick}
         scale={1}
         ref={vendingMachineRef}
@@ -187,8 +187,10 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
         <mesh>
           <sphereGeometry args={[0.1]}/>
           <meshBasicMaterial color="red" wireframe={true} />
-        </mesh> */}
-        <BloodBurst scale={5} position={[0,0,0]}/>
+        </mesh>
+        
+        <BloodBurst active={gameStatus === GameStatus.GAMEOVER} scale={5} position={[0,0,8]}/>
+
         <mesh rotation={[Math.PI/2,0,0]}>
           <planeGeometry args={[40, 40]} />
           <meshBasicMaterial color="lightgrey" opacity={0.6} side={DoubleSide}/>

@@ -1,18 +1,20 @@
 import { GroupProps, useFrame } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BufferGeometry, DoubleSide, NormalBufferAttributes, ShaderMaterial } from "three";
 import vertexShader from "./shaders/vertex.glsl";
 import fragmentShader from "./shaders/fragment.glsl";
 
 
+
 interface BloodBurstProps extends GroupProps{
-    particleCount:number
-    color:string
-    animationDuration:number
-    radius:number
+    active:boolean
+    particleCount?:number
+    color?:string
+    animationDuration?:number
+    radius?:number
 }
 
-export default function BloodBurst(props:GroupProps){
+export default function BloodBurst({active,...props}:BloodBurstProps){
 
     const geometryRef = useRef<BufferGeometry<NormalBufferAttributes>>(null)
     const materialRef = useRef<ShaderMaterial>(null)
@@ -27,18 +29,29 @@ export default function BloodBurst(props:GroupProps){
     }, [])
 
     useEffect(() => {
-        geometryRef.current?.computeVertexNormals()
-    },[positions])
+        // geometryRef.current?.computeVertexNormals()
+        console.log('active',active)
+        if(active){
+            
+        }
+    },[active])
     
 
     useFrame(({clock}) => {
+        if(!active) {
+            clock.start()
+            return
+        }
         if(!materialRef.current) return
         const elapsedTime = clock.getElapsedTime()
+    
+        console.log(elapsedTime)
         materialRef.current.uniforms.uTime.value = elapsedTime
     }
     )
 
-    return (
+    return (<>
+    {active && 
         <group {...props} scale={[2,7,2]}>
         <points position={[0,0,0]}>
             <bufferGeometry ref={geometryRef}>
@@ -56,5 +69,8 @@ export default function BloodBurst(props:GroupProps){
             />
         </points>
         </group>
+}
+    </>
+        
     );
 }
