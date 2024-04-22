@@ -5,12 +5,19 @@ import vertexShader from "./shaders/vertex.glsl";
 import fragmentShader from "./shaders/fragment.glsl";
 
 
+interface BloodBurstProps extends GroupProps{
+    particleCount:number
+    color:string
+    animationDuration:number
+    radius:number
+}
+
 export default function BloodBurst(props:GroupProps){
 
     const geometryRef = useRef<BufferGeometry<NormalBufferAttributes>>(null)
     const materialRef = useRef<ShaderMaterial>(null)
 
-    const verticiesCount = 50*3
+    const verticiesCount = 1000*3
     const positions = useMemo(() => {
         const positions = new Float32Array(verticiesCount* 3)
         for(let i = 0; i < verticiesCount*3; i++){
@@ -32,7 +39,7 @@ export default function BloodBurst(props:GroupProps){
     )
 
     return (
-        <group {...props} >
+        <group {...props} scale={[2,7,2]}>
         <points position={[0,0,0]}>
             <bufferGeometry ref={geometryRef}>
                 <bufferAttribute attach={"attributes-position"} count={verticiesCount} array={positions} itemSize={3} />
