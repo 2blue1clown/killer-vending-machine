@@ -189,7 +189,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
           <meshBasicMaterial color="red" wireframe={true} />
         </mesh>
         
-        <BloodBurst active={gameStatus === GameStatus.GAMEOVER} scale={5} position={[0,0,8]}/>
+        <BloodBurst active={gameStatus === GameStatus.GAMEOVER && getDirection() == 1} scale={5} position={[0,0,8]}/>
 
         <mesh rotation={[Math.PI/2,0,0]}>
           <planeGeometry args={[40, 40]} />
