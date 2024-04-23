@@ -192,7 +192,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
         <BloodBurst active={gameStatus === GameStatus.GAMEOVER && getDirection() == 1} scale={5} position={[0,0,8]}/>
 
         <mesh rotation={[Math.PI/2,0,0]}>
-          <planeGeometry args={[40, 40]} />
+          <circleGeometry args={[20]} />
           <meshBasicMaterial color="lightgrey" opacity={0.6} side={DoubleSide}/>
         </mesh>
     </>
