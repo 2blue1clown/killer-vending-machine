@@ -36,7 +36,9 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
   const [spaceBarDown,setSpaceBarDown] = useState(false)
 
 
+
   const [speed,setSpeed]= useState(1)
+
 
   function moveBoundry(rotation?:number){
     if(!boundaryRef.current) return
@@ -49,13 +51,6 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
   }
 
-  useEffect(() => {
-    if(gameStatus === GameStatus.PLAYING){
-      console.log('playing')
-      moveBoundry(Math.PI/6)
-
-    }
-  },[gameStatus])
 
 
   function changingFromSpaceBar(){
@@ -142,6 +137,20 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
   }
 
+  useEffect(() => {
+    
+
+    if(gameStatus === GameStatus.PLAYING){
+      console.log('playing')
+      moveBoundry(Math.PI/6)
+    }
+    
+    window.addEventListener('click',changeFromClick)
+    return () => {
+      window.removeEventListener('click',changeFromClick)
+    }
+  },[gameStatus])
+
   useFrame(({clock},delta) => {
    
     changingFromSpaceBar()
@@ -168,8 +177,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
   return (
     <>
-      {/* <Perf position="top-left" /> */}
-
+       <Perf position="top-right" /> 
       <OrbitControls makeDefault />
       <directionalLight castShadow position={[1, 2, 3]} intensity={3} />
       <ambientLight intensity={0.8} />
