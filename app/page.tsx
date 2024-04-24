@@ -38,9 +38,8 @@ export default function Home() {
       {gameStatus === GameStatus.PREGAME && <h1>Killer Vending Machine</h1>}
       
       {(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER)&& <div>{score}</div>}
-      {gameStatus === GameStatus.PREGAME &&
-      <button onClick={startGame}>Play</button>
-}
+      {gameStatus === GameStatus.PREGAME &&<button onClick={startGame}>Play</button>}
+      {gameStatus === GameStatus.GAMEOVER && <button onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>}
     </div>
   </main>
   );

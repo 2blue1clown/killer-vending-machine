@@ -39,6 +39,19 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
   const [speed,setSpeed]= useState(1)
 
+  function startGame(){
+    console.log("starting game")
+    moveBoundry(Math.PI/6)
+   
+
+  }
+
+  function reset(){
+    setVendingMachineRotation(0)
+    setScore(0);
+    (boundaryPlaneRef.current?.material as MeshBasicMaterial).color.set("blue")
+    moveBoundry(0)
+  }
 
   function moveBoundry(rotation?:number){
     if(!boundaryRef.current) return
@@ -101,7 +114,11 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     setSpeed(Math.random()*0.5+score*0.1)
   }
 
-  
+  function setVendingMachineRotation(rotation:number){
+    if(!vendingMachineRef.current) return
+    vendingMachineRef.current.rotation.x = rotation
+  }
+    
 
   function moveMachine(delta:number){
 
@@ -121,7 +138,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       tip = Math.sign(tip) * Math.PI/2;
     }
 
-    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0)
+    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0.001)
     officeWorkerGroup.scale.y = officeWorkerScale
 
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
@@ -129,7 +146,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       gameOver()
     }
 
-    vendingMachineGroup.rotation.x = tip;
+    setVendingMachineRotation(tip)
 
     //Make  it so that the machine pivots on its corner instead of center
     vendingMachineGroup.position.z = Math.sign(tip) * VENDING_MACHINE_WIDTH/2
@@ -142,9 +159,13 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
     if(gameStatus === GameStatus.PLAYING){
       console.log('playing')
-      moveBoundry(Math.PI/6)
+      startGame()
     }
-    
+    if(gameStatus === GameStatus.PREGAME){
+      console.log('pregame')
+      reset()
+    }
+  
     window.addEventListener('click',changeFromClick)
     return () => {
       window.removeEventListener('click',changeFromClick)
