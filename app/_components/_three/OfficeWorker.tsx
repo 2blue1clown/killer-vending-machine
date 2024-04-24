@@ -11,7 +11,7 @@ export const OfficeWorker = forwardRef((props:GroupProps,ref: Ref<Group<Object3D
     
     return (
         <group ref={ref} {...props}>
-                  <primitive position={[0,17.3,0]} object={fatman.scene}/>
+                  <primitive position={[0,17.1,0]} object={fatman.scene}/>
         </group>
     )
 })

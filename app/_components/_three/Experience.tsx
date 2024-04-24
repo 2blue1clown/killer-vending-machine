@@ -118,7 +118,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       tip = Math.sign(tip) * Math.PI/2;
     }
 
-    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.7/(Math.PI/2)))),0)
+    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0)
     officeWorkerGroup.scale.y = officeWorkerScale
 
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
@@ -163,12 +163,14 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       {/* <Perf position="top-left" /> */}
 
       <OrbitControls makeDefault />
-      <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
-      <ambientLight intensity={1.5} />
+      <directionalLight castShadow position={[1, 2, 3]} intensity={3} />
+      <ambientLight intensity={0.8} />
+      <group position={[0,0,-4]}>
       <VendingMachine
         onClick={changeFromClick}
         scale={1}
         ref={vendingMachineRef}
+        castShadow
       ></VendingMachine>
       <OfficeWorker ref={officeWorkerRef} position={[0,0,8]} rotation={[0,Math.PI,0]} scale={0.5}/>
       
@@ -177,23 +179,14 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
           <planeGeometry args={[10 , 20]} />
           <meshBasicMaterial color={0x0000ff} transparent={true} opacity={gameStatus === GameStatus.PREGAME? 0 : 0.2} side={DoubleSide}/>
         </mesh>
-        {/* <mesh>
-          <sphereGeometry args={[0.1]}/>
-          <meshBasicMaterial color="orange" wireframe={true} />
-        </mesh> */}
       </group>
 
-
-        {/* <mesh>
-          <sphereGeometry args={[0.1]}/>
-          <meshBasicMaterial color="red" wireframe={true} />
-        </mesh> */}
-        
         <BloodBurst active={gameStatus === GameStatus.GAMEOVER && getDirection() == 1} scale={5} position={[0,0,8]}/>
-
-        <mesh rotation={[Math.PI/2,0,0]}>
-          <circleGeometry args={[20]} />
-          <meshBasicMaterial color="lightgrey" opacity={0.6} side={DoubleSide}/>
+        
+        </group>
+        <mesh position={[0,-0.25,0]}>
+          <cylinderGeometry args={[15,15,0.5,32]}/>
+          <meshStandardMaterial color="silver" side={DoubleSide}/>
         </mesh>
     </>
   );
