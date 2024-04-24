@@ -1,14 +1,11 @@
 "use client"
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import Image from "next/image";
 import Experience, { GameStatus } from "./_components/_three/Experience";
 import { useState } from "react";
+import Leaderboard from "./_components/Leaderboard";
 
-interface Scores {
-  name:string,
-  score:number
-}
+
 
 export default function Home() {
 
@@ -20,7 +17,6 @@ export default function Home() {
     setGameStatus(GameStatus.PLAYING)
   }
 
-  const scores:Scores[] = [{name:'jzj',score:1},{name:'vin',score:0}]
 
   return (
     <main>
@@ -48,28 +44,7 @@ export default function Home() {
         <>
         <button onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>
         <br></br>
-    <table className="table-auto border border-black">
-      <caption>High Scores</caption>
-      <thead className="border border-black">
-        <tr >
-          <th className="border border-black" scope="col">Rank</th>
-          <th className="border border-black" scope="col">Name</th>
-          <th className="border border-black" scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-    {
-  scores.sort((a, b) => b.score - a.score)
-    .map((item, index) => (
-      <tr className="border border-black" key={index}>
-        <td className="border border-black">{index + 1}</td>
-        <td className="border border-black">{item.name}</td>
-        <td className="border border-black">{item.score}</td>
-      </tr>
-    ))
-}
-</tbody>
-    </table>
+        <Leaderboard score={score}></Leaderboard>
         </>}
      
     </div>
