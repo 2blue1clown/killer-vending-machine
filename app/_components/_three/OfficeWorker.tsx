@@ -16,4 +16,6 @@ const OfficeWorker = forwardRef((props:GroupProps,ref: Ref<Group<Object3DEventMa
     )
 })
 
+OfficeWorker.displayName = 'OfficeWorker'
+
 export default OfficeWorker;

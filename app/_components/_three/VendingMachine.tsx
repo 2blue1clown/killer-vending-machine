@@ -43,4 +43,6 @@ const VendingMachine = forwardRef(
   },
 );
 
+VendingMachine.displayName = "VendingMachine";
+
 export default VendingMachine;
