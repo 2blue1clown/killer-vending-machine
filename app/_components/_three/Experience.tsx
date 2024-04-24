@@ -106,7 +106,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     if(gameStatus !== GameStatus.PLAYING && gameStatus !== GameStatus.GAMEOVER) return
 
     const vendingMachineGroup = vendingMachineRef.current as Group<Object3DEventMap>
-    const vendingMachineMesh = vendingMachineGroup.children[1]
+    const vendingMachineMesh = vendingMachineGroup.children[0]
     const officeWorkerGroup = officeWorkerRef.current as Group<Object3DEventMap>
 
 
@@ -118,7 +118,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       tip = Math.sign(tip) * Math.PI/2;
     }
 
-    const officeWorkerScale = Math.min(0.5,0.5* (1 - tip/(Math.PI/2)))
+    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.7/(Math.PI/2)))),0)
     officeWorkerGroup.scale.y = officeWorkerScale
 
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
@@ -177,17 +177,17 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
           <planeGeometry args={[10 , 20]} />
           <meshBasicMaterial color={0x0000ff} transparent={true} opacity={gameStatus === GameStatus.PREGAME? 0 : 0.2} side={DoubleSide}/>
         </mesh>
-        <mesh>
+        {/* <mesh>
           <sphereGeometry args={[0.1]}/>
           <meshBasicMaterial color="orange" wireframe={true} />
-        </mesh>
+        </mesh> */}
       </group>
 
 
-        <mesh>
+        {/* <mesh>
           <sphereGeometry args={[0.1]}/>
           <meshBasicMaterial color="red" wireframe={true} />
-        </mesh>
+        </mesh> */}
         
         <BloodBurst active={gameStatus === GameStatus.GAMEOVER && getDirection() == 1} scale={5} position={[0,0,8]}/>
 

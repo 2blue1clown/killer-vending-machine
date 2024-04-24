@@ -28,10 +28,10 @@ export const VendingMachine = forwardRef(
         ref={ref as Ref<Group<Object3DEventMap>>}
         scale={scale}
       >
-        <mesh position={[0, 0,0]}>
+        {/* <mesh position={[0, 0,0]}>
           <sphereGeometry args={[0.25]} />
           <meshBasicMaterial color="orange" wireframe={true} />
-        </mesh>
+        </mesh> */}
         <primitive
           object={vendingMachine.scene}
           onClick={onClick}
