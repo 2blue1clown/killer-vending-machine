@@ -5,7 +5,10 @@ import Image from "next/image";
 import Experience, { GameStatus } from "./_components/_three/Experience";
 import { useState } from "react";
 
-
+interface Scores {
+  name:string,
+  score:number
+}
 
 export default function Home() {
 
@@ -16,6 +19,8 @@ export default function Home() {
     console.log("Starting game")
     setGameStatus(GameStatus.PLAYING)
   }
+
+  const scores:Scores[] = [{name:'jzj',score:1},{name:'vin',score:0}]
 
   return (
     <main>
@@ -39,7 +44,34 @@ export default function Home() {
       
       {(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER)&& <div>{score}</div>}
       {gameStatus === GameStatus.PREGAME &&<button onClick={startGame}>Play</button>}
-      {gameStatus === GameStatus.GAMEOVER && <button onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>}
+      {gameStatus === GameStatus.GAMEOVER && 
+        <>
+        <button onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>
+        <br></br>
+    <table className="table-auto border border-black">
+      <caption>High Scores</caption>
+      <thead className="border border-black">
+        <tr >
+          <th className="border border-black" scope="col">Rank</th>
+          <th className="border border-black" scope="col">Name</th>
+          <th className="border border-black" scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+    {
+  scores.sort((a, b) => b.score - a.score)
+    .map((item, index) => (
+      <tr className="border border-black" key={index}>
+        <td className="border border-black">{index + 1}</td>
+        <td className="border border-black">{item.name}</td>
+        <td className="border border-black">{item.score}</td>
+      </tr>
+    ))
+}
+</tbody>
+    </table>
+        </>}
+     
     </div>
   </main>
   );
