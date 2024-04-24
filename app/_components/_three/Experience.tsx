@@ -11,6 +11,13 @@ import BloodBurst from "./BloodBurst/BloodBurst";
 const VENDING_MACHINE_WIDTH = 3.6;
 const MARGIN_FOR_ERROR = 0.1;
 
+export enum GameStatus {
+  PREGAME,
+  PLAYING,
+  PAUSED,
+  GAMEOVER
+}
+
 interface ExperienceProps{
   score:number,
   setScore: (score:number) => void
@@ -18,12 +25,7 @@ interface ExperienceProps{
   setGameStatus: (gameStatus:GameStatus) => void
 }
 
-export enum GameStatus {
-  PREGAME,
-  PLAYING,
-  PAUSED,
-  GAMEOVER
-}
+
 
 export default function Experience({score,setScore,gameStatus,setGameStatus}:ExperienceProps) {
   const vendingMachineRef = useRef<Group>(null)
@@ -47,7 +49,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
   }
 
   function reset(){
-    setVendingMachineRotation(0)
+    // setVendingMachineRotation(0)
     setScore(0);
     (boundaryPlaneRef.current?.material as MeshBasicMaterial).color.set("blue")
     moveBoundry(0)
@@ -123,17 +125,23 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
   function moveMachine(delta:number){
 
     if(!vendingMachineRef.current) return
-    if(gameStatus !== GameStatus.PLAYING && gameStatus !== GameStatus.GAMEOVER) return
 
     const vendingMachineGroup = vendingMachineRef.current as Group<Object3DEventMap>
     const vendingMachineMesh = vendingMachineGroup.children[0]
     const officeWorkerGroup = officeWorkerRef.current as Group<Object3DEventMap>
 
+    let tip = vendingMachineGroup.rotation.x
 
-    let tip = vendingMachineGroup.rotation.x + getDirection()*(speed*delta+Math.pow(vendingMachineGroup.rotation.x,2)*0.05);
+    if(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER){
+        tip = vendingMachineGroup.rotation.x + getDirection()*(0.01+Math.pow(vendingMachineGroup.rotation.x,2)*0.02);
+    }
+    if(gameStatus === GameStatus.PREGAME && tip !== 0){
+      tip = tip + -Math.sign(tip)*0.01
+      if(tip < 0.01 && tip > -0.01){
+        tip = 0
+      }
+    }
 
-
-    
     if(Math.abs(tip) > Math.PI/2){
       tip = Math.sign(tip) * Math.PI/2;
     }
@@ -145,6 +153,8 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       console.log("hit boundary")
       gameOver()
     }
+ 
+
 
     setVendingMachineRotation(tip)
 
