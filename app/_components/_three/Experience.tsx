@@ -177,7 +177,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
   return (
     <>
-       <Perf position="top-right" /> 
+       <Perf position="bottom-right" /> 
       <OrbitControls makeDefault />
       <directionalLight castShadow position={[1, 2, 3]} intensity={3} />
       <ambientLight intensity={0.8} />
