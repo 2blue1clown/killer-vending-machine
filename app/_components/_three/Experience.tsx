@@ -5,7 +5,6 @@ import {  useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "three";
 import VendingMachine  from "./VendingMachine";
-import { GameStatus } from "@/app/page";
 import  OfficeWorker  from "./OfficeWorker";
 import BloodBurst from "./BloodBurst/BloodBurst";
 
@@ -17,6 +16,13 @@ interface ExperienceProps{
   setScore: (score:number) => void
   gameStatus:GameStatus,
   setGameStatus: (gameStatus:GameStatus) => void
+}
+
+export enum GameStatus {
+  PREGAME,
+  PLAYING,
+  PAUSED,
+  GAMEOVER
 }
 
 export default function Experience({score,setScore,gameStatus,setGameStatus}:ExperienceProps) {

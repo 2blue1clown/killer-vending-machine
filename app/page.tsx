@@ -2,15 +2,10 @@
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Image from "next/image";
-import Experience from "./_components/_three/Experience";
+import Experience, { GameStatus } from "./_components/_three/Experience";
 import { useState } from "react";
 
-export enum GameStatus {
-  PREGAME,
-  PLAYING,
-  PAUSED,
-  GAMEOVER
-}
+
 
 export default function Home() {
 
