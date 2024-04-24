@@ -5,13 +5,13 @@ import { Group, Object3DEventMap } from "three"
 
 
 
-export const FatMan = forwardRef((props:GroupProps,ref: Ref<Group<Object3DEventMap>> | undefined) => {
+export const OfficeWorker = forwardRef((props:GroupProps,ref: Ref<Group<Object3DEventMap>> | undefined) => {
 
-    const fatman = useGLTF('./fat-man.glb')
+    const fatman = useGLTF('./office-worker.glb')
     
     return (
         <group ref={ref} {...props}>
-                  <primitive object={fatman.scene}/>
+                  <primitive position={[0,17.3,0]} object={fatman.scene}/>
         </group>
     )
 })

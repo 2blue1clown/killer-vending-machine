@@ -6,7 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "three";
 import { VendingMachine } from "./VendingMachine";
 import { GameStatus } from "@/app/page";
-import { FatMan } from "./FatMan";
+import { OfficeWorker } from "./OfficeWorker";
 import BloodBurst from "./BloodBurst/BloodBurst";
 
 const VENDING_MACHINE_WIDTH = 3.6;
@@ -22,7 +22,7 @@ interface ExperienceProps{
 export default function Experience({score,setScore,gameStatus,setGameStatus}:ExperienceProps) {
   const vendingMachineRef = useRef<Group>(null)
   const boundaryRef = useRef<Group>(null)
-  const fatmanRef = useRef<Group>(null)
+  const officeWorkerRef = useRef<Group>(null)
   const boundaryPlaneRef = useRef<Mesh>(null)
   const [subscribeKeys, getKeys] = useKeyboardControls()
 
@@ -107,7 +107,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
     const vendingMachineGroup = vendingMachineRef.current as Group<Object3DEventMap>
     const vendingMachineMesh = vendingMachineGroup.children[1]
-    const fatmanGroup = fatmanRef.current as Group<Object3DEventMap>
+    const officeWorkerGroup = officeWorkerRef.current as Group<Object3DEventMap>
 
 
     let tip = vendingMachineGroup.rotation.x + getDirection()*(speed*delta+Math.pow(vendingMachineGroup.rotation.x,2)*0.05);
@@ -118,8 +118,8 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       tip = Math.sign(tip) * Math.PI/2;
     }
 
-    const fatmanScale = Math.min(1.5,1.5* (1 - tip/(Math.PI/2)))
-    fatmanGroup.scale.y = fatmanScale
+    const officeWorkerScale = Math.min(0.5,0.5* (1 - tip/(Math.PI/2)))
+    officeWorkerGroup.scale.y = officeWorkerScale
 
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
       console.log("hit boundary")
@@ -170,7 +170,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
         scale={1}
         ref={vendingMachineRef}
       ></VendingMachine>
-      <FatMan ref={fatmanRef} position={[0,0,8]} scale={[1.5,1.5,1.5]}/>
+      <OfficeWorker ref={officeWorkerRef} position={[0,0,8]} rotation={[0,Math.PI,0]} scale={0.5}/>
       
     <group ref={boundaryRef} rotation={[0,0,0]} position={[0,0,0]} > 
         <mesh ref={boundaryPlaneRef} position={[0,10,0]}>
