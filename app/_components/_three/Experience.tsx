@@ -38,7 +38,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       moveBoundry(Math.PI/6)
 
     }
-  },[gameStatus])
+  },[gameStatus,moveBoundry])
 
 
   function changingFromSpaceBar(){

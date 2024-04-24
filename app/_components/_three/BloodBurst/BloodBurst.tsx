@@ -26,7 +26,7 @@ export default function BloodBurst({active,...props}:BloodBurstProps){
             positions[i] = (Math.random()-0.5)*3
         }
         return positions
-    }, [])
+    }, [verticiesCount])
 
     useEffect(() => {
         // geometryRef.current?.computeVertexNormals()
