@@ -133,7 +133,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     let tip = vendingMachineGroup.rotation.x
 
     if(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER){
-        tip = vendingMachineGroup.rotation.x + getDirection()*(0.01+0.05*score+Math.pow(vendingMachineGroup.rotation.x,2)*0.02);
+        tip = vendingMachineGroup.rotation.x + getDirection()*(0.01+0.005*score+Math.pow(vendingMachineGroup.rotation.x,2)*0.02);
     }
     if(gameStatus === GameStatus.PREGAME && tip !== 0){
       tip = tip + -Math.sign(tip)*0.01
