@@ -13,7 +13,7 @@ interface VendingMachineProps extends GroupProps{
 
 
 
-export const VendingMachine = forwardRef(
+const VendingMachine = forwardRef(
   ({ scale,onClick, position = [0, 0, 0],...props }: VendingMachineProps, ref) => {
     
     const vendingMachine = useGLTF("./vending-machine.glb");
@@ -42,3 +42,5 @@ export const VendingMachine = forwardRef(
     );
   },
 );
+
+export default VendingMachine;

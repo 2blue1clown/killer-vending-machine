@@ -5,7 +5,7 @@ import { Group, Object3DEventMap } from "three"
 
 
 
-export const OfficeWorker = forwardRef((props:GroupProps,ref: Ref<Group<Object3DEventMap>> | undefined) => {
+const OfficeWorker = forwardRef((props:GroupProps,ref: Ref<Group<Object3DEventMap>> | undefined) => {
 
     const fatman = useGLTF('./office-worker.glb')
     
@@ -15,3 +15,5 @@ export const OfficeWorker = forwardRef((props:GroupProps,ref: Ref<Group<Object3D
         </group>
     )
 })
+
+export default OfficeWorker;

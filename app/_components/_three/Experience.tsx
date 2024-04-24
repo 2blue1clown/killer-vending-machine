@@ -4,9 +4,9 @@ import { Perf } from "r3f-perf";
 import {  useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3DEventMap } from "three";
-import { VendingMachine } from "./VendingMachine";
+import VendingMachine  from "./VendingMachine";
 import { GameStatus } from "@/app/page";
-import { OfficeWorker } from "./OfficeWorker";
+import  OfficeWorker  from "./OfficeWorker";
 import BloodBurst from "./BloodBurst/BloodBurst";
 
 const VENDING_MACHINE_WIDTH = 3.6;
