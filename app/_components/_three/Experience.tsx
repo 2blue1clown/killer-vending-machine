@@ -134,20 +134,22 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
     if(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER){
         tip = vendingMachineGroup.rotation.x + getDirection()*(delta*(0.5+0.1*score+Math.pow(vendingMachineGroup.rotation.x,2)*0.2));
-        const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0.001)
-        officeWorkerGroup.scale.y = officeWorkerScale
+
     }
     if(gameStatus === GameStatus.PREGAME && tip !== 0){
       tip = tip + -Math.sign(tip)*0.01
       if(tip < 0.01 && tip > -0.01){
         tip = 0
       }
+
     }
 
     if(Math.abs(tip) > Math.PI/2){
       tip = Math.sign(tip) * Math.PI/2;
     }
 
+    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0.001)
+    officeWorkerGroup.scale.y = officeWorkerScale
     
 
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
