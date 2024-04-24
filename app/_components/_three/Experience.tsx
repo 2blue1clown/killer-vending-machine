@@ -9,7 +9,7 @@ import  OfficeWorker  from "./OfficeWorker";
 import BloodBurst from "./BloodBurst/BloodBurst";
 
 const VENDING_MACHINE_WIDTH = 3.6;
-const MARGIN_FOR_ERROR = 0.15;
+const MARGIN_FOR_ERROR = 0.17;
 
 export enum GameStatus {
   PREGAME,
@@ -133,7 +133,9 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     let tip = vendingMachineGroup.rotation.x
 
     if(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER){
-        tip = vendingMachineGroup.rotation.x + getDirection()*(0.01+0.005*score+Math.pow(vendingMachineGroup.rotation.x,2)*0.02);
+        tip = vendingMachineGroup.rotation.x + getDirection()*(delta*(0.5+0.1*score+Math.pow(vendingMachineGroup.rotation.x,2)*0.2));
+        const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0.001)
+        officeWorkerGroup.scale.y = officeWorkerScale
     }
     if(gameStatus === GameStatus.PREGAME && tip !== 0){
       tip = tip + -Math.sign(tip)*0.01
@@ -146,8 +148,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
       tip = Math.sign(tip) * Math.PI/2;
     }
 
-    const officeWorkerScale = Math.max(Math.min(0.5,0.5* (1 - (tip - 0.6/(Math.PI/2)))),0.001)
-    officeWorkerGroup.scale.y = officeWorkerScale
+    
 
     if(gameStatus!== GameStatus.GAMEOVER && hitBoundary()){
       console.log("hit boundary")
