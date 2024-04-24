@@ -38,13 +38,24 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
 
   const [speed,setSpeed]= useState(1)
 
+  function moveBoundry(rotation?:number){
+    if(!boundaryRef.current) return
+    if(rotation){
+      boundaryRef.current.rotation.x = rotation
+      boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
+      return
+    }
+    boundaryRef.current.rotation.x = -getDirection()*Math.random()*Math.PI/2
+    boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
+  }
+
   useEffect(() => {
     if(gameStatus === GameStatus.PLAYING){
       console.log('playing')
       moveBoundry(Math.PI/6)
 
     }
-  },[gameStatus,moveBoundry])
+  },[gameStatus])
 
 
   function changingFromSpaceBar(){
@@ -95,16 +106,7 @@ export default function Experience({score,setScore,gameStatus,setGameStatus}:Exp
     setSpeed(Math.random()*0.5+score*0.1)
   }
 
-  function moveBoundry(rotation?:number){
-    if(!boundaryRef.current) return
-    if(rotation){
-      boundaryRef.current.rotation.x = rotation
-      boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
-      return
-    }
-    boundaryRef.current.rotation.x = -getDirection()*Math.random()*Math.PI/2
-    boundaryRef.current.position.z = getDirection()*VENDING_MACHINE_WIDTH/2;
-  }
+  
 
   function moveMachine(delta:number){
 

@@ -44,8 +44,6 @@ export default function BloodBurst({active,...props}:BloodBurstProps){
         }
         if(!materialRef.current) return
         const elapsedTime = clock.getElapsedTime()
-    
-        console.log(elapsedTime)
         materialRef.current.uniforms.uTime.value = elapsedTime
     }
     )
