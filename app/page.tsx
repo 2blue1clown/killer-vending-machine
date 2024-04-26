@@ -2,14 +2,25 @@
 import { KeyboardControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Experience, { GameStatus } from "./_components/_three/Experience";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Leaderboard from "./_components/Leaderboard";
+import { Scores } from "./api/leaderboard/route";
+import SaveScore from "./_components/_three/SaveScore";
 
 
 
 export default function Home() {
 
   const [score,setScore] = useState(0)
+  const [scores,setScores] = useState<Scores[]>([])
+
+  useEffect(() => {
+
+    (async () => {const res = await fetch('/api/leaderboard',{method:'GET'})     
+    const scores = await res.json()
+    setScores(scores)
+})()},[])
+
   const [gameStatus,setGameStatus] = useState<GameStatus>(GameStatus.PREGAME)
 
   const startGame = () => {
@@ -36,15 +47,21 @@ export default function Home() {
     </Canvas>,
   </KeyboardControls>
   <div className="flex flex-col p-10 items-center  absolute top-0 left-0"> 
-      {gameStatus === GameStatus.PREGAME && <h1>Killer Vending Machine</h1>}
+      {gameStatus === GameStatus.PREGAME && <h1 className="text-xl"><strong>Killer Vending Machine</strong></h1>}
       
-      {(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER)&& <div>{score}</div>}
-      {gameStatus === GameStatus.PREGAME &&<button onClick={startGame}>Play</button>}
+      {(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER)&& <div className="text-xl">{score}</div>}
+      {gameStatus === GameStatus.PREGAME &&<button className="border p-1 hover:bg-white" onClick={startGame}>Play</button>}
       {gameStatus === GameStatus.GAMEOVER && 
         <>
-        <button onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>
+        <button className="border p-1 hover:bg-white" onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>
         <br></br>
-        <Leaderboard score={score}></Leaderboard>
+        <h2>High Scores</h2>
+        <div className="h-72 overflow-scroll flex flex-col items-center border border-black">
+        <Leaderboard scores={scores}></Leaderboard>
+        </div>
+        <br></br>
+        <SaveScore scores={scores} setScores={setScores} score={score}></SaveScore>
+ 
         </>}
      
     </div>
