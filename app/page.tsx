@@ -13,15 +13,14 @@ export default function Home() {
 
   const [score,setScore] = useState(0)
   const [scores,setScores] = useState<Scores[]>([])
+  const [gameStatus,setGameStatus] = useState<GameStatus>(GameStatus.PREGAME)
 
   useEffect(() => {
-
     (async () => {const res = await fetch('/api/leaderboard',{method:'GET'})     
     const scores = await res.json()
     setScores(scores)
 })()},[])
 
-  const [gameStatus,setGameStatus] = useState<GameStatus>(GameStatus.PREGAME)
 
   const startGame = () => {
     console.log("Starting game")
@@ -48,9 +47,10 @@ export default function Home() {
   </KeyboardControls>
   <div className="flex flex-col p-10 items-center  absolute top-0 left-0"> 
       {gameStatus === GameStatus.PREGAME && <h1 className="text-xl"><strong>Killer Vending Machine</strong></h1>}
-      
       {(gameStatus === GameStatus.PLAYING || gameStatus === GameStatus.GAMEOVER)&& <div className="text-xl">{score}</div>}
       {gameStatus === GameStatus.PREGAME &&<button className="border p-1 hover:bg-white" onClick={startGame}>Play</button>}
+      {gameStatus === GameStatus.GAMEOVER && score === 0 && <div className="border border-dashed m-2"><div>Tip!</div>
+      <div className="w-64" >Stop the vending machine from reaching the boundary by pressing space or tapping the screen!</div></div>}
       {gameStatus === GameStatus.GAMEOVER && 
         <>
         <button className="border p-1 hover:bg-white" onClick={()=>setGameStatus(GameStatus.PREGAME)}>Play Again</button>
