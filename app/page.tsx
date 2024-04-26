@@ -1,5 +1,5 @@
 "use client"
-import { KeyboardControls } from "@react-three/drei";
+import { KeyboardControls, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Experience, { GameStatus } from "./_components/_three/Experience";
 import { useEffect, useState } from "react";
@@ -33,6 +33,7 @@ export default function Home() {
       <KeyboardControls map={ [
     {name:"change",keys:["Space"]},
   ] }>
+    
     <Canvas
       shadows
       camera={{
@@ -67,4 +68,10 @@ export default function Home() {
     </div>
   </main>
   );
+}
+
+
+function Loader() {
+  const { active, progress, errors, item, loaded, total } = useProgress()
+  return < div>{progress} % loaded</div>
 }
